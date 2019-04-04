@@ -57,5 +57,10 @@ public class Savings extends Account{
 	public double getMonthlyInterest() {
 		return TotalAmount * (getMonthlyInterestRate() / 100);
 	}
+	
+	/** Return a String decription of Account class */
+	public String toString() {
+		return getMonthlyInterest + TotalAmount;
+	}
 
 }
