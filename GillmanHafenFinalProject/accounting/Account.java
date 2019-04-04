@@ -4,13 +4,17 @@
 //Date: 4/5/19
 //CIT 260
 package accounting;
+
+import java.time.LocalDateTime;
+
 public class Account {
 
 	//data fields
 	private String name;
 	private int AccountNumber;
-	private String AccountType;
-	private String dateCreated;
+	private int AccountType; //1-checking 2-saving - changed for easier verification
+	private double startingBalance;
+	private LocalDateTime dateCreated; //is this correct?
 	
 	/**
 	 * default no-arg contructor
@@ -26,10 +30,12 @@ public class Account {
 	 * @param AccountNumber
 	 * @param AccountType
 	 */
-	public Account(String name, int AccountNumber, String AccountType) {
+	public Account(String name, int AccountNumber, int AccountType, double startingBalance) {
 		this.name = name;
 		this.AccountNumber = AccountNumber;
 		this.AccountType = AccountType;
+		this.startingBalance = startingBalance;
+		this.dateCreated = LocalDateTime.now(); 
 		
 	}
 	
@@ -64,7 +70,7 @@ public class Account {
 	 * method for getting account type
 	 * @return type
 	 */
-	public String getAccountType(){
+	public int getAccountType(){
 		
 		return AccountType;
 	}
