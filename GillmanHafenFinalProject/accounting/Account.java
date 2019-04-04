@@ -12,12 +12,13 @@ public class Account {
 	//data fields
 	private String name;
 	private int AccountNumber;
-	private int AccountType; //1-checking 2-saving - changed for easier verification
+	private String AccountType;
 	private double startingBalance;
 	private LocalDateTime dateCreated; //is this correct?
 	
 	/**
 	 * default no-arg contructor
+	 * @param object 
 	 * @return none
 	 */
 	public Account() {
@@ -30,7 +31,7 @@ public class Account {
 	 * @param AccountNumber
 	 * @param AccountType
 	 */
-	public Account(String name, int AccountNumber, int AccountType, double startingBalance) {
+	public Account(String name, int AccountNumber, String AccountType, double startingBalance) {
 		this.name = name;
 		this.AccountNumber = AccountNumber;
 		this.AccountType = AccountType;
@@ -70,7 +71,7 @@ public class Account {
 	 * method for getting account type
 	 * @return type
 	 */
-	public int getAccountType(){
+	public String getAccountType(){
 		
 		return AccountType;
 	}
@@ -88,8 +89,10 @@ public class Account {
 	 * toString method
 	 */
 	public String toString() {
-		String test = "";
-		return test;
+		
+		return "Name: " + name + "\nAccount Number: " + AccountNumber + "\nAccount Type: " + AccountType + "\nStarting Balance: " + startingBalance;
 	}
+	
+	
 	
 }

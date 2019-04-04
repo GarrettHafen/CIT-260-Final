@@ -3,7 +3,28 @@
 //Assignment: Final Project
 //Date: 4/5/19
 //CIT 260
+
+		//
+		//
+		// DEV NOTE -- CAN THE USER TYPE EXIT IN enterName() TO GO BACK TO THE MAIN MENU?? HOW??
+		//
+		//
+			
+		//
+		//
+		// DEV NOTE -- NEED SEED DATA??
+		//
+		//
+
+		//
+		//
+		// DEV NOTE -- NEED METHOD DESCRIPTION THINGYS
+		//
+		//
+
 import accounting.*;
+
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.*;
@@ -13,14 +34,10 @@ public class MainFinal {
 		//declare variables
 		String name = "";
 		int accountNumber = 1000;
-		int accountType = 0; //1-checking 2-saving
+		String accountType = ""; 
 		double startingBalance = 0.0;
 		int userInput = 0;
 		boolean isError = true;
-		int nameVerification = 0;
-		int accountTypeVerification = 0;
-		
-		int startingBalanceVerification = 0;
 		
 		//declare constants
 		
@@ -63,7 +80,42 @@ public class MainFinal {
 			//check for user input then direct to right system
 			if(userInput == 1) {
 				
-				accountCreation();
+				//get name of new account
+				System.out.println("You have chosen to create a new account.");
+
+				// get name
+				System.out.println("Please enter the name for this new account.");	
+				name = enterName();		
+
+				//get account type 
+				System.out.println("Thank you, now to properly calculate the interest, please enter the account type: "
+						+ "1 for checking or 2 for savings.");
+				accountType = enterAccountType();
+					
+				//get starting balance
+				System.out.println("Thank you, now please enter the starting balance of this account.");
+				startingBalance = enterStartingBalance();
+				
+				//generate random account number (or incrementing account number?)
+				
+				//
+				//
+				// DEV NOTE -- NEED A WAY TO QUERY THE ARRAYLIST FOR MOST RECENT ACCOUNT NUMBER TO PRESERVE AFTER SESSION ENDS
+				//
+				//
+				
+				accountNumber = accountNumber + 1;
+				System.out.println("Thank you, for your records, the account number will be: " + accountNumber + ".");
+				//store into arrayList
+				accounts.add(new Account(name, accountNumber, accountType, startingBalance));
+				//print receipt
+				PrintWriter myFile = new PrintWriter(accountNumber + "-Recipt.txt");
+				myFile.println(accounts.get(accounts.size()-1).toString());
+				myFile.close();
+				System.out.println("Your account as been created. A receipt has been printed.");
+				for(int i = 0; i<accounts.size(); i++) {
+					System.out.println(accounts.get(i).toString());
+				}
 				
 			}else if (userInput == 2) {
 				//if user input is 2 then direct to list of all accounts, redirect back to menu
@@ -91,151 +143,12 @@ public class MainFinal {
 		}while(userInput != 4);
 
 	}
-
-	public static void accountCreation() {
-		//setup scanner
-		Scanner in = new Scanner(System.in);
-		
-		boolean isError = true;
-		String name = "";
-		//if user input is 1 then direct to new account logic
-		
-		//get name of new account
-		System.out.println("You have chosen to create a new account.");
-		
-		//
-		//
-		// DEV NOTE -- CAN THE USER TYPE EXIT TO GO BACK TO THE MAIN MENU?? HOW??
-		//
-		//
-		
-		//
-		//
-		// DEV NOTE -- split up into methods. 
-		//
-		//
-		
-		//
-		//
-		// DEV NOTE -- NEED SEED DATA??
-		//
-		//
-		
-		System.out.println("Please enter the name for this new account.");
-		name = enterName();
-		
-		//-------------------------------------name entry---------------------------------------
-		//-------------------------------------account type---------------------------------------
-		//get account type (1-checking 2-saving)
-		System.out.println("Thank you, now to properly calculate the interest, please enter the account "
-				+ "type. 1 for checking, 2 for savings.");
-		accountType = in.nextInt();
-		//reset isError
-		isError = true;
-		//do/while to ensure proper account type selection
-		do {
-			try {
-				System.out.println("You entered " + accountType + ", is this correct? 1 for yes, 2 for no, 3 to quit.");
-				accountTypeVerification = in.nextInt();
-				//check if user enters anything other than 1,2,3.
-				if (accountTypeVerification !=1 && accountTypeVerification !=2 && accountTypeVerification !=3) {
-					System.out.println("Invalid selection. Try again");
-					in.nextLine();
-					isError = true;
-				}
-				// if user wants to change the account type, clear account type and try again.
-				if(accountTypeVerification == 2) {
-					System.out.println("Please re-enter the name");
-					accountType = in.nextInt();
-					isError = true;
-				}
-				isError = false;
-			}
-			catch (InputMismatchException e) {
-				System.out.println("Sorry, That response is incorrect, Please Enter an integer: ");
-				//clear input
-				in.nextLine();
-			}
-		} while (isError);
-		//if they want to quit, then exit the system and go back to the main menu
-		if(accountTypeVerification == 3) {
-			
-		}
-		//-------------------------------------account type---------------------------------------
-		//-------------------------------------starting balance---------------------------------------
-		
-		//
-		//
-		// DEV NOTE -- FORMAT AMOUNT TO HAVE .00
-		//
-		//
-		
-		//get starting balance
-		System.out.println("Thank you, now please enter the starting balance of this account.");
-		startingBalance = in.nextDouble();
-		//do/while to ensure proper balance entry
-		do {
-			try {
-				System.out.println("You entered " + startingBalance + ", is this correct? 1 for yes, 2 for no, 3 to quit.");
-				startingBalanceVerification = in.nextInt();
-				//check if user enters anything other than 1,2,3.
-				if (startingBalanceVerification !=1 && startingBalanceVerification !=2 && startingBalanceVerification !=3) {
-					System.out.println("Invalid selection. Try again");
-					in.nextLine();
-					isError = true;
-				}
-				// if user wants to change the account type, clear account type and try again.
-				if(startingBalanceVerification == 2) {
-					System.out.println("Please re-enter the name");
-					accountType = in.nextInt();
-					isError = true;
-				}
-				isError = false;
-			}
-			catch (InputMismatchException e) {
-				System.out.println("Sorry, That response is incorrect, Please Enter an integer: ");
-				//clear input
-				in.nextLine();
-			}
-		} while (isError);
-		//if they want to quit, then exit the system and go back to the main menu
-		if(startingBalanceVerification == 3) {
-			return;
-		}
-		//-------------------------------------starting balance---------------------------------------
-		//generate random account number (or incrementing account number?)
-		
-		//
-		//
-		// DEV NOTE -- NEED A WAY TO QUERY THE ARRAYLIST FOR MOST RECENT ACCOUNT NUMBER TO PRESERVE AFTER SESSION ENDS
-		//
-		//
-		
-		//
-		//
-		// DEV NOTE -- CREATE WAY TO DISPLAY CHECKING OR SAVINGS BASED ON accountType
-		//
-		//
-		
-		accountNumber = accountNumber + 1;
-		System.out.println("Thank you, for your records, the account number will be: " + accountNumber + ".");
-		
-		//store into arrayList
-		accounts.add(new Account(name, accountNumber, accountType, startingBalance));
-		//print receipt
-		PrintWriter myFile = new PrintWriter(accountNumber + "-Recipt.txt");
-		myFile.println("NAME: " + name);
-		myFile.println("ACCOUNT NUMBER: " + accountNumber);
-		myFile.println("ACCOUNT TYPE: " + accountType);
-		myFile.println("$" + startingBalance);
-		myFile.close();
-		System.out.println("Your account as been created. A receipt has been printed.");
-	}
 	
-	public static String enterName() {
+	public static String enterName() throws IOException {
 		//setup scanner
 		Scanner in = new Scanner(System.in);
-		
+		//enter name
+		String name =in.next();
 		int nameVerification = 0;
 		boolean isError = true;
 		//verify name is correct
@@ -247,13 +160,104 @@ public class MainFinal {
 				//check if user enters anything other than 1,2,3.
 				if (nameVerification !=1 && nameVerification !=2 && nameVerification !=3) {
 					System.out.println("Invalid selection. Try again");
-					in.nextInt();
-					isError = true;
+					in.nextLine();
 				}
-				// if user wants to change the name, clear name and try again.
-				if(nameVerification == 2) {
-					System.out.println("Please re-enter the name");
-					enterName();
+				isError = false;
+			}
+			catch (InputMismatchException e) {
+				System.out.println("Sorry, That response is incorrect, Please Enter an integer: ");
+				//clear input
+				in.nextLine();
+			}
+			// if user wants to change the name, call enterName method again.
+			if(nameVerification == 2) {
+				System.out.println("Please re-enter the name.");
+				in.nextLine();
+				enterName();
+			}
+		} while (isError);
+		// if they want to quit, then exit the system and go back to the main menu
+		if(nameVerification == 3) {
+			main(null);
+		}
+		return name;
+	}
+	
+	public static String enterAccountType() throws IOException{
+		//setup scanner
+		Scanner in = new Scanner(System.in);
+		
+		//get accountType
+		int accountType = in.nextInt();
+		boolean isError = true;
+		int accountTypeVerification = 0;
+		String accountTypeWord = "";
+		
+		if(accountType != 1 && accountType != 2 ) {
+			System.out.println("Invalid entry, please try again. 1 for Checking or 1 for Savings");
+			enterAccountType();
+		}
+		//convert number to word and store.
+		if(accountType == 1) {
+			accountTypeWord = "Checking";
+		}else {
+			accountTypeWord = "Savings";
+		}
+		//do/while to ensure proper account type selection
+		do {
+			try {
+				System.out.println("You entered " + accountType + ": " + accountTypeWord + ", is this correct? 1 for yes, 2 for no, 3 to quit.");
+				accountTypeVerification = in.nextInt();
+				//check if user enters anything other than 1,2,3.
+				if (accountTypeVerification !=1 && accountTypeVerification !=2 && accountTypeVerification !=3) {
+					System.out.println("Invalid selection. Try again");
+					in.nextLine();
+				}
+				// if user wants to change the account type, clear account type and try again.
+				if(accountTypeVerification == 2) {
+					System.out.println("Please re-enter the account type.");
+					enterAccountType();
+				}
+				isError = false;
+			}
+			catch (InputMismatchException e) {
+				System.out.println("Sorry, That response is incorrect, Please Enter an integer: ");
+				//clear input
+				in.nextLine();
+			}
+		} while (isError);
+		//if they want to quit, then exit the system and go back to the main menu
+		if(accountTypeVerification == 3) {
+			main(null);
+		}
+		
+		return accountTypeWord;
+	}
+	
+	public static double enterStartingBalance() throws IOException{
+		//setup scanner
+		Scanner in = new Scanner(System.in);
+		
+		double startingBalance = in.nextDouble();
+		int startingBalanceVerification = 0;
+		boolean isError = true;
+		
+		//do/while to ensure proper balance entry
+		do {
+			try {
+				System.out.printf("You entered $%-15.2f\n", startingBalance );
+				System.out.println("Is this correct? 1 for yes, 2 for no, 3 to quit.");
+				startingBalanceVerification = in.nextInt();
+				//check if user enters anything other than 1,2,3.
+				if (startingBalanceVerification !=1 && startingBalanceVerification !=2 && startingBalanceVerification !=3) {
+					System.out.println("Invalid selection. Try again");
+					in.nextLine();
+					
+				}
+				// if user wants to change the account type, clear account type and try again.
+				if(startingBalanceVerification == 2) {
+					System.out.println("Please re-enter the amount");
+					enterStartingBalance();
 					
 				}
 				isError = false;
@@ -264,10 +268,12 @@ public class MainFinal {
 				in.nextLine();
 			}
 		} while (isError);
-		// if they want to quit, then exit the system and go back to the main menu
-		if(nameVerification == 3) {
-			return;
+		//if they want to quit, then exit the system and go back to the main menu
+		
+		if(startingBalanceVerification == 3) {
+			main(null);
 		}
+		return startingBalance;
 	}
 }
 
