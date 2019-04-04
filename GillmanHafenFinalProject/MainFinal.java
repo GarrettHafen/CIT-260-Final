@@ -144,42 +144,12 @@ public class MainFinal {
 
 	}
 	
-	public static String enterName() throws IOException {
+	public static String enterName() {
 		//setup scanner
 		Scanner in = new Scanner(System.in);
 		//enter name
 		String name =in.next();
-		int nameVerification = 0;
-		boolean isError = true;
-		//verify name is correct
-		//do/while ensures proper name verification selection
-		do {
-			try {
-				System.out.println("You entered " + name + ", is this correct? 1 for yes, 2 for no, 3 to quit.");
-				nameVerification = in.nextInt();
-				//check if user enters anything other than 1,2,3.
-				if (nameVerification !=1 && nameVerification !=2 && nameVerification !=3) {
-					System.out.println("Invalid selection. Try again");
-					in.nextLine();
-				}
-				isError = false;
-			}
-			catch (InputMismatchException e) {
-				System.out.println("Sorry, That response is incorrect, Please Enter an integer: ");
-				//clear input
-				in.nextLine();
-			}
-			// if user wants to change the name, call enterName method again.
-			if(nameVerification == 2) {
-				System.out.println("Please re-enter the name.");
-				in.nextLine();
-				enterName();
-			}
-		} while (isError);
-		// if they want to quit, then exit the system and go back to the main menu
-		if(nameVerification == 3) {
-			main(null);
-		}
+				
 		return name;
 	}
 	
@@ -187,36 +157,25 @@ public class MainFinal {
 		//setup scanner
 		Scanner in = new Scanner(System.in);
 		
-		//get accountType
-		int accountType = in.nextInt();
+		
 		boolean isError = true;
-		int accountTypeVerification = 0;
 		String accountTypeWord = "";
 		
-		if(accountType != 1 && accountType != 2 ) {
-			System.out.println("Invalid entry, please try again. 1 for Checking or 1 for Savings");
-			enterAccountType();
-		}
-		//convert number to word and store.
-		if(accountType == 1) {
-			accountTypeWord = "Checking";
-		}else {
-			accountTypeWord = "Savings";
-		}
+		
 		//do/while to ensure proper account type selection
 		do {
 			try {
-				System.out.println("You entered " + accountType + ": " + accountTypeWord + ", is this correct? 1 for yes, 2 for no, 3 to quit.");
-				accountTypeVerification = in.nextInt();
-				//check if user enters anything other than 1,2,3.
-				if (accountTypeVerification !=1 && accountTypeVerification !=2 && accountTypeVerification !=3) {
-					System.out.println("Invalid selection. Try again");
-					in.nextLine();
-				}
-				// if user wants to change the account type, clear account type and try again.
-				if(accountTypeVerification == 2) {
-					System.out.println("Please re-enter the account type.");
+				//get accountType
+				int accountType = in.nextInt();
+				if(accountType != 1 && accountType != 2 ) {
+					System.out.println("Invalid entry, please try again. 1 for Checking or 1 for Savings");
 					enterAccountType();
+				}
+				//convert number to word and store.
+				if(accountType == 1) {
+					accountTypeWord = "Checking";
+				}else {
+					accountTypeWord = "Savings";
 				}
 				isError = false;
 			}
@@ -226,10 +185,6 @@ public class MainFinal {
 				in.nextLine();
 			}
 		} while (isError);
-		//if they want to quit, then exit the system and go back to the main menu
-		if(accountTypeVerification == 3) {
-			main(null);
-		}
 		
 		return accountTypeWord;
 	}
@@ -237,29 +192,12 @@ public class MainFinal {
 	public static double enterStartingBalance() throws IOException{
 		//setup scanner
 		Scanner in = new Scanner(System.in);
-		
-		double startingBalance = in.nextDouble();
-		int startingBalanceVerification = 0;
+		double startingBalance = 0.0;
 		boolean isError = true;
 		
-		//do/while to ensure proper balance entry
 		do {
 			try {
-				System.out.printf("You entered $%-15.2f\n", startingBalance );
-				System.out.println("Is this correct? 1 for yes, 2 for no, 3 to quit.");
-				startingBalanceVerification = in.nextInt();
-				//check if user enters anything other than 1,2,3.
-				if (startingBalanceVerification !=1 && startingBalanceVerification !=2 && startingBalanceVerification !=3) {
-					System.out.println("Invalid selection. Try again");
-					in.nextLine();
-					
-				}
-				// if user wants to change the account type, clear account type and try again.
-				if(startingBalanceVerification == 2) {
-					System.out.println("Please re-enter the amount");
-					enterStartingBalance();
-					
-				}
+				startingBalance = in.nextDouble();
 				isError = false;
 			}
 			catch (InputMismatchException e) {
@@ -268,11 +206,7 @@ public class MainFinal {
 				in.nextLine();
 			}
 		} while (isError);
-		//if they want to quit, then exit the system and go back to the main menu
 		
-		if(startingBalanceVerification == 3) {
-			main(null);
-		}
 		return startingBalance;
 	}
 }
