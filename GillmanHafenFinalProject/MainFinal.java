@@ -4,17 +4,6 @@
 //Date: 4/5/19
 //CIT 260
 
-		//
-		//
-		// DEV NOTE -- CAN THE USER TYPE EXIT IN enterName() TO GO BACK TO THE MAIN MENU?? HOW??
-		//
-		//
-			
-		//
-		//
-		// DEV NOTE -- NEED SEED DATA??
-		//
-		//
 
 		//
 		//
@@ -24,13 +13,12 @@
 
 import accounting.*;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Scanner;
 import java.util.*;
 public class MainFinal {
 
-	public static void main(String[] args) throws java.io.IOException {
+	public static void main(String[] args) throws FileNotFoundException {
 		//declare variables
 		String name = "";
 		int accountNumber = 1000;
@@ -49,6 +37,7 @@ public class MainFinal {
 		
 		//-------------------------------------start---------------------------------------
 		System.out.println("Welcome to OOP Bank");
+		accountNumber = seedData(accounts, accountNumber);
 		
 		//first do/while is to keep the system open till the user is done. terminate with '4' selection
 		//second do/while is the initial menu. 1 for add, 2 for list, 3 for balance
@@ -110,17 +99,19 @@ public class MainFinal {
 				accounts.add(new Account(name, accountNumber, accountType, startingBalance));
 				//print receipt
 				PrintWriter myFile = new PrintWriter(accountNumber + "-Recipt.txt");
-				myFile.println(accounts.get(accounts.size()-1).toString());
+				myFile.println(accounts.get(accounts.size()-1).toStringNew());
 				myFile.close();
 				System.out.println("Your account as been created. A receipt has been printed.");
-				for(int i = 0; i<accounts.size(); i++) {
-					System.out.println(accounts.get(i).toString());
-				}
+				
 				
 			}else if (userInput == 2) {
 				//if user input is 2 then direct to list of all accounts, redirect back to menu
 				//print out all the accounts stored in array list: account name, number, type, balance. 
 				//print out total accounts, total in assets and how many of each type
+				
+				for(int i = 0; i<accounts.size(); i++) {
+					System.out.println(accounts.get(i).toStringList());
+				}
 			}else if (userInput == 3) {
 				//if user input is 3 then direct user for account number, check account number and print file
 				// get account number
@@ -153,7 +144,7 @@ public class MainFinal {
 		return name;
 	}
 	
-	public static String enterAccountType() throws IOException{
+	public static String enterAccountType() {
 		//setup scanner
 		Scanner in = new Scanner(System.in);
 		
@@ -189,7 +180,7 @@ public class MainFinal {
 		return accountTypeWord;
 	}
 	
-	public static double enterStartingBalance() throws IOException{
+	public static double enterStartingBalance() {
 		//setup scanner
 		Scanner in = new Scanner(System.in);
 		double startingBalance = 0.0;
@@ -208,6 +199,20 @@ public class MainFinal {
 		} while (isError);
 		
 		return startingBalance;
+	}
+	
+	public static int seedData(ArrayList<Account> accounts, int accountNumber) {
+		accountNumber = accountNumber + 1;
+		accounts.add(new Account("Garrett", accountNumber, "Checking", 100.00));
+		accountNumber = accountNumber + 1;
+		accounts.add(new Account("Anna", accountNumber, "Savings", 1230.33));
+		accountNumber = accountNumber + 1;
+		accounts.add(new Account("Miles", accountNumber, "Checking", 0.01));
+		accountNumber = accountNumber + 1;
+		accounts.add(new Account("Brandan", accountNumber, "Savings", 100.00));
+		accountNumber = accountNumber + 1;
+		accounts.add(new Account("Jordan", accountNumber, "Checking", 100.00));
+		return accountNumber;
 	}
 }
 

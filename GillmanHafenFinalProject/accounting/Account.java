@@ -86,11 +86,18 @@ public class Account {
 	}
 	
 	/**
-	 * toString method
+	 * toStringNew method
 	 */
-	public String toString() {
+	public String toStringNew() {
 		
 		return "Name: " + name + "\nAccount Number: " + AccountNumber + "\nAccount Type: " + AccountType + "\nStarting Balance: " + startingBalance;
+	}
+	/**
+	 * toStringList method
+	 */
+	public String toStringList() {
+		
+		return "Name: " + name + " | Account Number: " + AccountNumber + " | Account Type: " + AccountType + " | Starting Balance: " + startingBalance;
 	}
 	
 	
