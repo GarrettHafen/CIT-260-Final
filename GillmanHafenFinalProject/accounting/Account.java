@@ -5,8 +5,6 @@
 //CIT 260
 package accounting;
 
-import java.time.LocalDateTime;
-
 public class Account {
 
 	//data fields
@@ -14,7 +12,7 @@ public class Account {
 	private int AccountNumber;
 	private String AccountType;
 	private double startingBalance;
-	private LocalDateTime dateCreated; //is this correct?
+	private java.util.Date dateCreated;
 	
 	/**
 	 * default no-arg contructor
@@ -31,12 +29,12 @@ public class Account {
 	 * @param AccountNumber
 	 * @param AccountType
 	 */
-	public Account(String name, int AccountNumber, String AccountType, double startingBalance) {
+	public Account(String name, int AccountNumber, String AccountType, double startingBalance, java.util.Date dateCreated) {
 		this.name = name;
 		this.AccountNumber = AccountNumber;
 		this.AccountType = AccountType;
 		this.startingBalance = startingBalance;
-		this.dateCreated = LocalDateTime.now(); 
+		this.dateCreated = dateCreated; 
 		
 	}
 	
@@ -86,6 +84,33 @@ public class Account {
 	}
 	
 	/**
+	 * method for getting account type
+	 * @return type
+	 */
+	public double getStartingBalance(){
+		
+		return startingBalance;
+	}
+	
+	/** the getDateCreated() method
+	 * Purpose: return the date the object was created
+	 * @param void
+	 * @returns: a java.util.Date object
+	 */
+	public java.util.Date getDateCreated( ) {
+		return dateCreated;
+	}
+	
+	/** the getDateCreated() method
+	 * Purpose: return the date the object was created
+	 * @param void
+	 * @returns: a java.util.Date object
+	 */
+	public void setDateCreated(java.util.Date createdDate) {
+		dateCreated = createdDate;
+	}
+	
+	/**
 	 * toStringNew method
 	 */
 	public String toStringNew() {
@@ -97,7 +122,8 @@ public class Account {
 	 */
 	public String toStringList() {
 		
-		return "Name: " + name + " | Account Number: " + AccountNumber + " | Account Type: " + AccountType + " | Starting Balance: " + startingBalance;
+		return "Name: " + name + " | Account Number: " + AccountNumber + " | Account Type: " + AccountType + 
+				" | Starting Balance: " + startingBalance + " | Creation Date: " + dateCreated;
 	}
 	
 	

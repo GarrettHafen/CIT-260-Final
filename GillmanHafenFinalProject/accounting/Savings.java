@@ -5,6 +5,8 @@ public class Savings extends Account{
 	private double InterestRate;
 	private double TotalAmount;
 	
+	private final double INTEREST_RATE = .04;
+	
 	/**
 	 * default no-arg contructor
 	 * @return none
@@ -60,7 +62,7 @@ public class Savings extends Account{
 	
 	/** Return a String decription of Account class */
 	public String toString() {
-		return getMonthlyInterest + TotalAmount;
+		return "The current balance is " + getMonthlyInterest() + TotalAmount + " with the amount interest earned being " + getMonthlyInterest();
 	}
 
 }

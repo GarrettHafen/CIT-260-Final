@@ -4,16 +4,24 @@
 //Date: 4/5/19
 //CIT 260
 package accounting;
+
+import java.util.Date;
+
 public class Checking extends Account{
 	
 	private double startingBalance;
+	private double interestEarned;
+	private Date createdDate;
+	
+	private final double INTEREST_RATE = .003;
 	
 	/**
 	 * default no-arg contructor
 	 * @return none
 	 */
 	public Checking() {
-		
+		super();
+		interestEarned= 0.0;
 	}
 	
 	/**
@@ -21,7 +29,8 @@ public class Checking extends Account{
 	 * @param balance
 	 * @return 
 	 */
-	public void Checking(double startingBalance) {
+	public Checking(String name, int AccountNumber, String AccountType, double startingBalance, java.util.Date dateCreated) {
+		super(name, AccountNumber, AccountType, startingBalance, dateCreated);
 		this.startingBalance = startingBalance;
 		
 	}
@@ -34,6 +43,14 @@ public class Checking extends Account{
 		return startingBalance;
 	}
 	
+	/**
+	 * method for getting the savings starting balance
+	 * @return balance
+	 */
+	public double getInterestEarned() {
+		return startingBalance;
+	}
+	
 	
 	
 	/**
@@ -42,7 +59,8 @@ public class Checking extends Account{
 	@Override
 	public String toString() {
 		
-		return "Name: " + name + "\nAccount Number: " + AccountNumber + "\nAccount Type: " + AccountType + "\nStarting Balance: " + startingBalance;
+		return "Name: " + super.getName() + "\nAccount Number: " + super.getAccountNumber() + "\nAccount Type: " 
+		+ super.getAccountType() + "\nStarting Balance: " + super.getStartingBalance();
 	}
 
 }

@@ -27,6 +27,7 @@ public class MainFinal {
 		int userInput = 0;
 		boolean isError = true;
 		
+		
 		//declare constants
 		
 		//setup scanner
@@ -37,6 +38,7 @@ public class MainFinal {
 		
 		//-------------------------------------start---------------------------------------
 		System.out.println("Welcome to OOP Bank");
+		
 		accountNumber = seedData(accounts, accountNumber);
 		
 		//first do/while is to keep the system open till the user is done. terminate with '4' selection
@@ -96,7 +98,8 @@ public class MainFinal {
 				accountNumber = accountNumber + 1;
 				System.out.println("Thank you, for your records, the account number will be: " + accountNumber + ".");
 				//store into arrayList
-				accounts.add(new Account(name, accountNumber, accountType, startingBalance));
+				java.util.Date date = new Date();
+				accounts.add(new Account(name, accountNumber, accountType, startingBalance, date));
 				//print receipt
 				PrintWriter myFile = new PrintWriter(accountNumber + "-Recipt.txt");
 				myFile.println(accounts.get(accounts.size()-1).toStringNew());
@@ -202,17 +205,23 @@ public class MainFinal {
 	}
 	
 	public static int seedData(ArrayList<Account> accounts, int accountNumber) {
+		java.util.Date date = new Date();
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Garrett", accountNumber, "Checking", 100.00));
+		accounts.add(new Account("Garrett", accountNumber, "Checking", 100.00, date));
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Anna", accountNumber, "Savings", 1230.33));
+		accounts.add(new Account("Anna", accountNumber, "Savings", 1230.33, date));
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Miles", accountNumber, "Checking", 0.01));
+		accounts.add(new Account("Miles", accountNumber, "Checking", 0.01, date));
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Brandan", accountNumber, "Savings", 100.00));
+		accounts.add(new Account("Brandan", accountNumber, "Savings", 100.00, date));
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Jordan", accountNumber, "Checking", 100.00));
+		accounts.add(new Account("Jordan", accountNumber, "Checking", 100.00, date));
 		return accountNumber;
+	}
+	
+	public static long setDate(int years) {
+		long milisecondsSince = 0;
+		return milisecondsSince;
 	}
 }
 
