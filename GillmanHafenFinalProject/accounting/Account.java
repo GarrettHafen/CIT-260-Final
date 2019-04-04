@@ -60,7 +60,7 @@ public class Account {
 	
 	/**
 	 * method for setting account number
-	 * @return 10 digit account number
+	 * @return new account number
 	 */
 	public int getAccountNumber(){
 		
