@@ -1,5 +1,5 @@
 //File Prologue
-//Name: Nicole Gillman and Garret Hafen
+//Name: Nicole Gillman and Garrett Hafen
 //Assignment: Final Project
 //Date: 4/5/19
 //CIT 260
@@ -26,6 +26,7 @@ public class MainFinal {
 		double startingBalance = 0.0;
 		int userInput = 0;
 		boolean isError = true;
+		Account accountToPrint;
 		
 		
 		//declare constants
@@ -92,6 +93,7 @@ public class MainFinal {
 				//
 				//
 				// DEV NOTE -- NEED A WAY TO QUERY THE ARRAYLIST FOR MOST RECENT ACCOUNT NUMBER TO PRESERVE AFTER SESSION ENDS
+				//     use accounts.get(accounts.size()-1).getAccountNumber + 1;
 				//
 				//
 				
@@ -99,7 +101,7 @@ public class MainFinal {
 				System.out.println("Thank you, for your records, the account number will be: " + accountNumber + ".");
 				//store into arrayList
 				java.util.Date date = new Date();
-				accounts.add(new Account(name, accountNumber, accountType, startingBalance, date));
+				accounts.add(new Checking(name, accountNumber, accountType, startingBalance, date));
 				//print receipt
 				PrintWriter myFile = new PrintWriter(accountNumber + "-Recipt.txt");
 				myFile.println(accounts.get(accounts.size()-1).toStringNew());
@@ -120,24 +122,22 @@ public class MainFinal {
 				// get account number
 				// console thank you and to check the directory for *file name*
 				//print 'recipt' with file name *accountnumber-name-recipt*;
+				System.out.println("Please enter the account number you want a receipt for.");
+				accountToPrint = accountToPrint(accounts);
+				PrintWriter myFile = new PrintWriter(accountToPrint.getAccountNumber() + "-Recipt.txt");
+				myFile.println(accountToPrint.toStringNew());
+				myFile.close();
+				System.out.println("Thank you. A receipt has been printed with the name of "+ accountToPrint.getAccountNumber() + "-Recipt.txt.");
+				
 			}
-			
-			
-			//name = in.nextLine();
-			//accountNumber = in.nextInt();
-			//accountType = in.nextInt();
-			
-			//Account a1 = new Account(name, accountNumber, accountType);
-			//System.out.println(a1.getName());
-			//PrintWriter myFile = new PrintWriter("Recipt.txt");
-			//myFile.println(a1.getName());
-			//myFile.println(a1.getAccountNumber());
-			//myFile.println(a1.getAccountType());
-			//myFile.close();
+
 		}while(userInput != 4);
 
 	}
-	
+	/**
+	 * Method for adding new account name
+	 * @return account name
+	 */
 	public static String enterName() {
 		//setup scanner
 		Scanner in = new Scanner(System.in);
@@ -147,6 +147,10 @@ public class MainFinal {
 		return name;
 	}
 	
+	/**
+	 * Method for new Account type
+	 * @return account type
+	 */
 	public static String enterAccountType() {
 		//setup scanner
 		Scanner in = new Scanner(System.in);
@@ -183,6 +187,10 @@ public class MainFinal {
 		return accountTypeWord;
 	}
 	
+	/**
+	 * Method for new starting balance amount
+	 * @return starting balance
+	 */
 	public static double enterStartingBalance() {
 		//setup scanner
 		Scanner in = new Scanner(System.in);
@@ -204,24 +212,44 @@ public class MainFinal {
 		return startingBalance;
 	}
 	
+	/**
+	 * Method for array of existing accounts
+	 * @param accounts
+	 * @param accountNumber
+	 * @return 
+	 */
 	public static int seedData(ArrayList<Account> accounts, int accountNumber) {
 		java.util.Date date = new Date();
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Garrett", accountNumber, "Checking", 100.00, date));
+		accounts.add(new Checking("Garrett", accountNumber, "Checking", 100.00, date));
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Anna", accountNumber, "Savings", 1230.33, date));
+		accounts.add(new Savings("Anna", accountNumber, "Savings", 1230.33, date));
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Miles", accountNumber, "Checking", 0.01, date));
+		accounts.add(new Checking("Miles", accountNumber, "Checking", 0.01, date));
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Brandan", accountNumber, "Savings", 100.00, date));
+		accounts.add(new Savings("Brandan", accountNumber, "Savings", 100.00, date));
 		accountNumber = accountNumber + 1;
-		accounts.add(new Account("Jordan", accountNumber, "Checking", 100.00, date));
+		accounts.add(new Checking("Jordan", accountNumber, "Checking", 17510.00, date));
 		return accountNumber;
 	}
 	
-	public static long setDate(int years) {
-		long milisecondsSince = 0;
-		return milisecondsSince;
+	public static  Account accountToPrint(ArrayList<Account> accounts) {
+		//setup scanner
+				Scanner in = new Scanner(System.in);
+				//enter name
+				int accountToPrint =in.nextInt();
+				int accountPlaceHolder = 0;
+				
+				for(int i = 0; i<accounts.size(); i++) {
+					if(accounts.get(i).getAccountNumber() == accountToPrint) {
+						accountPlaceHolder = i;
+					}
+				/*for(a : accounts) {
+					if (a.getAccountNumber() == accountToPrint) {
+						return accountToPrint;
+					}*/
+				}
+				return accounts.get(accountPlaceHolder);
 	}
 }
 

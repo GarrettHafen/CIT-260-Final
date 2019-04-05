@@ -24,11 +24,13 @@ public class Account {
 	}
 	
 	/**
-	 * constructor for Account
-	 * @param name
-	 * @param AccountNumber
-	 * @param AccountType
-	 */
+     * constructor for Account
+     * @param name
+     * @param AccountNumber
+     * @param AccountType
+     * @param startingBalance
+     * @param dateCreated
+     */
 	public Account(String name, int AccountNumber, String AccountType, double startingBalance, java.util.Date dateCreated) {
 		this.name = name;
 		this.AccountNumber = AccountNumber;
@@ -57,8 +59,8 @@ public class Account {
 	}
 	
 	/**
-	 * method for setting account number
-	 * @return new account number
+	 * method for getting account number
+	 * @return returns account number
 	 */
 	public int getAccountNumber(){
 		
@@ -112,6 +114,7 @@ public class Account {
 	
 	/**
 	 * toStringNew method
+	 * Purpose: creating the data to print in the receipt for new accounts
 	 */
 	public String toStringNew() {
 		
@@ -119,11 +122,11 @@ public class Account {
 	}
 	/**
 	 * toStringList method
+	 * Purpose: creating the data to print to the console for all existing accounts, or for when printing individual existing accounts
 	 */
 	public String toStringList() {
 		
-		return "Name: " + name + " | Account Number: " + AccountNumber + " | Account Type: " + AccountType + 
-				" | Starting Balance: " + startingBalance + " | Creation Date: " + dateCreated;
+		return "Name: " + name + " | Account Number: " + AccountNumber + " | Account Type is: " + AccountType;
 	}
 	
 	

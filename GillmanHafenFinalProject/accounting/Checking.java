@@ -9,11 +9,11 @@ import java.util.Date;
 
 public class Checking extends Account{
 	
-	private double startingBalance;
-	private double interestEarned;
-	private Date createdDate;
 	
-	private final double INTEREST_RATE = .003;
+	private double interestEarned;
+	
+	private final double INTEREST_RATE = .3;
+	private final double MONTHS = 12;
 	
 	/**
 	 * default no-arg contructor
@@ -31,7 +31,7 @@ public class Checking extends Account{
 	 */
 	public Checking(String name, int AccountNumber, String AccountType, double startingBalance, java.util.Date dateCreated) {
 		super(name, AccountNumber, AccountType, startingBalance, dateCreated);
-		this.startingBalance = startingBalance;
+		
 		
 	}
 	
@@ -40,27 +40,56 @@ public class Checking extends Account{
 	 * @return balance
 	 */
 	public double getstartingBalance() {
-		return startingBalance;
+		return super.getStartingBalance();
 	}
 	
 	/**
-	 * method for getting the savings starting balance
+	 * method for getting the interest earned //NEEDS UPDATED
 	 * @return balance
 	 */
 	public double getInterestEarned() {
-		return startingBalance;
+		interestEarned = super.getStartingBalance() * (INTEREST_RATE/100);
+		return interestEarned;
 	}
 	
+	/**
+	 * Method for getting the interest rate
+	 * @return
+	 */
+	public double getInterestRate () {
+		return INTEREST_RATE;
+	}
 	
+	/** Return monthly interest rate */
+	public double getMonthlyInterestRate() {
+		return INTEREST_RATE / MONTHS;
+	}
 	
 	/**
-	 * toString method
+	 * Method for getting monthly interest for current amount
+	 * @return calculated interest earned
+	 */
+	public double getMonthlyInterest() {
+		return super.getStartingBalance() * (getMonthlyInterestRate() / 100);
+	}
+	
+	/**
+	 * toStringNew method
+	 * Purpose: creating the data to print in the receipt for new accounts
+	 */
+	public String toStringNew() {
+		return "Name: " + super.getName() + "\nAccount Number: " + super.getAccountNumber() + "\nAccount Type: Checking" 
+			    + "\nStarting Balance: " + super.getStartingBalance();
+	}
+	/**
+	 * toStringList method
+	 * Purpose: creating the data to print to the console for all existing accounts, or for when printing individual existing accounts
 	 */
 	@Override
-	public String toString() {
-		
-		return "Name: " + super.getName() + "\nAccount Number: " + super.getAccountNumber() + "\nAccount Type: " 
-		+ super.getAccountType() + "\nStarting Balance: " + super.getStartingBalance();
+	public String toStringList() {
+		return String.format("Name: %-10s | Account Number: %-6d | Account Type: %-8s | Current Balance: %-10.2f | With %3.2f earned in interest."
+				, super.getName(), super.getAccountNumber(), "Checking", (super.getStartingBalance() + getInterestEarned()), getInterestEarned());
+			
 	}
 
 }
