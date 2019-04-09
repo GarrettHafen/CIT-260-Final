@@ -13,6 +13,7 @@
 
 import accounting.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -36,7 +37,6 @@ public class MainFinal {
 		
 		//start ArrayList
 		ArrayList<Account> accounts = new ArrayList<> ();
-		
 		//-------------------------------------start---------------------------------------
 		System.out.println("Welcome to OOP Bank");
 		
@@ -94,6 +94,7 @@ public class MainFinal {
 				//
 				// DEV NOTE -- NEED A WAY TO QUERY THE ARRAYLIST FOR MOST RECENT ACCOUNT NUMBER TO PRESERVE AFTER SESSION ENDS
 				//     use accounts.get(accounts.size()-1).getAccountNumber + 1;
+				//     add logic to create accounts.add(new Checking/Saving)
 				//
 				//
 				
@@ -101,11 +102,7 @@ public class MainFinal {
 				System.out.println("Thank you, for your records, the account number will be: " + accountNumber + ".");
 				//store into arrayList
 				java.util.Date date = new Date();
-				accounts.add(new Checking(name, accountNumber, accountType, startingBalance, date));
-				//print receipt
-				PrintWriter myFile = new PrintWriter(accountNumber + "-Recipt.txt");
-				myFile.println(accounts.get(accounts.size()-1).toStringNew());
-				myFile.close();
+				createAccount(name, accountNumber, accountType, startingBalance, date, accounts);
 				System.out.println("Your account as been created. A receipt has been printed.");
 				
 				
@@ -122,13 +119,20 @@ public class MainFinal {
 				// get account number
 				// console thank you and to check the directory for *file name*
 				//print 'recipt' with file name *accountnumber-name-recipt*;
-				System.out.println("Please enter the account number you want a receipt for.");
+				System.out.println("Please enter the account number you want details for.");
 				accountToPrint = accountToPrint(accounts);
-				PrintWriter myFile = new PrintWriter(accountToPrint.getAccountNumber() + "-Recipt.txt");
-				myFile.println(accountToPrint.toStringNew());
-				myFile.close();
-				System.out.println("Thank you. A receipt has been printed with the name of "+ accountToPrint.getAccountNumber() + "-Recipt.txt.");
+				try (Scanner existingFile = new Scanner( new File(accountToPrint.getAccountNumber() + "-Recipt.txt"))){
+					System.out.println(accountToPrint.toStringExisting());
+					existingFile.close();
+				}
+				catch(FileNotFoundException e) {
+					System.out.println("Could not open the file, program is terminating.");
+				}
 				
+				
+			}else if (userInput == 4) {
+				//if user input is 4, display exit message and end program
+				System.out.println("Thank you. You're session has ended.");
 			}
 
 		}while(userInput != 4);
@@ -136,6 +140,7 @@ public class MainFinal {
 	}
 	/**
 	 * Method for adding new account name
+	 * Author: Garrett
 	 * @return account name
 	 */
 	public static String enterName() {
@@ -149,6 +154,7 @@ public class MainFinal {
 	
 	/**
 	 * Method for new Account type
+	 * Author: Garrett
 	 * @return account type
 	 */
 	public static String enterAccountType() {
@@ -189,6 +195,7 @@ public class MainFinal {
 	
 	/**
 	 * Method for new starting balance amount
+	 * Author: Garrett
 	 * @return starting balance
 	 */
 	public static double enterStartingBalance() {
@@ -214,42 +221,101 @@ public class MainFinal {
 	
 	/**
 	 * Method for array of existing accounts
+	 * Author: Garrett
 	 * @param accounts
 	 * @param accountNumber
 	 * @return 
+	 * @throws FileNotFoundException 
 	 */
-	public static int seedData(ArrayList<Account> accounts, int accountNumber) {
+	public static int seedData(ArrayList<Account> accounts, int accountNumber) throws FileNotFoundException {
 		java.util.Date date = new Date();
 		accountNumber = accountNumber + 1;
-		accounts.add(new Checking("Garrett", accountNumber, "Checking", 100.00, date));
+		createAccount("Garrett", accountNumber, "Checking", 100.00, date, accounts);
 		accountNumber = accountNumber + 1;
-		accounts.add(new Savings("Anna", accountNumber, "Savings", 1230.33, date));
+		createAccount("Anna", accountNumber, "Savings", 1230.33, date, accounts);
 		accountNumber = accountNumber + 1;
-		accounts.add(new Checking("Miles", accountNumber, "Checking", 0.01, date));
+		createAccount("Miles", accountNumber, "Checking", 0.01, date, accounts);
 		accountNumber = accountNumber + 1;
-		accounts.add(new Savings("Brandan", accountNumber, "Savings", 100.00, date));
+		createAccount("Brandan", accountNumber, "Savings", 100.00, date, accounts);
 		accountNumber = accountNumber + 1;
-		accounts.add(new Checking("Jordan", accountNumber, "Checking", 17510.00, date));
+		createAccount("Jordan", accountNumber, "Checking", 17510.00, date, accounts);
 		return accountNumber;
 	}
 	
+	/**
+	 * Method for printing a specific account
+	 * Author: Garrett
+	 * @param accounts
+	 * @return specific account that matches the userInput account number
+	 */
 	public static  Account accountToPrint(ArrayList<Account> accounts) {
 		//setup scanner
 				Scanner in = new Scanner(System.in);
 				//enter name
-				int accountToPrint =in.nextInt();
+				int accountToPrint = 0;
 				int accountPlaceHolder = 0;
+				int accountVerification = 0;
+				boolean isError = true;
+				do {
+					do {
+						try {
+							accountToPrint = in.nextInt();
+							accountVerification = 0;
+							//check if user enters numbers
+							isError = false;
+						}
+						catch (InputMismatchException e) {
+							System.out.println("Sorry, That response is incorrect, Please Enter an integer: ");
+							//clear input
+							in.nextLine();
+						}
+					}while(isError);
+					
+					isError = true;
+					
+					for(int i = 0; i<accounts.size(); i++) {
+						if(accounts.get(i).getAccountNumber() == accountToPrint) {
+							isError = false;
+						}else {
+							accountVerification++;
+						}
+					}
+					if(accountVerification == accounts.size()) {
+						System.out.println("Please Enter an existing account number. "
+								+ "Enter 1001 if you cant remember the account number "
+								+ "and go back to print out the list of accounts.");
+						in.hasNextLine();
+					}
+					
+					
+					
+				}while(isError);
 				
 				for(int i = 0; i<accounts.size(); i++) {
 					if(accounts.get(i).getAccountNumber() == accountToPrint) {
 						accountPlaceHolder = i;
 					}
-				/*for(a : accounts) {
-					if (a.getAccountNumber() == accountToPrint) {
-						return accountToPrint;
-					}*/
 				}
 				return accounts.get(accountPlaceHolder);
+	}
+	
+	/**
+	 * Method for creating an account
+	 * Author: Garrett
+	 * @param name, account number, account type, starting balance, date, accounts
+	 * @return nothing
+	 */
+	public static void createAccount(String name, int accountNumber, String accountType, double startingBalance, Date date, ArrayList<Account> accounts) throws FileNotFoundException {
+		if(accountType == "Checking") {
+			accounts.add(new Checking(name, accountNumber, accountType, startingBalance, date));
+		}else {
+			accounts.add(new Savings(name, accountNumber, accountType, startingBalance, date));
+		}
+		//print receipt
+		PrintWriter myFile = new PrintWriter(accountNumber + "-Recipt.txt");
+		myFile.println(accounts.get(accounts.size()-1).toStringNew());
+		myFile.close();
+		
 	}
 }
 

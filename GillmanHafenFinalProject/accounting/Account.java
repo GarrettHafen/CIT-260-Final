@@ -16,6 +16,7 @@ public class Account {
 	
 	/**
 	 * default no-arg contructor
+	 * Author: Nicole
 	 * @param object 
 	 * @return none
 	 */
@@ -25,6 +26,7 @@ public class Account {
 	
 	/**
      * constructor for Account
+     * Author: Garrett and Nicole
      * @param name
      * @param AccountNumber
      * @param AccountType
@@ -42,6 +44,7 @@ public class Account {
 	
 	/**
 	 * method for getting name
+	 * Author: Nicole
 	 * @return name
 	 */
 	public String getName() {
@@ -51,6 +54,7 @@ public class Account {
 		
 	/**
 	 * method for setting new account holder name
+	 * Author: Nicole
 	 * @param name
 	 * @return none
 	 */
@@ -60,6 +64,7 @@ public class Account {
 	
 	/**
 	 * method for getting account number
+	 * Author: Nicole
 	 * @return returns account number
 	 */
 	public int getAccountNumber(){
@@ -69,6 +74,7 @@ public class Account {
 	
 	/**
 	 * method for getting account type
+	 * Author: Garrett
 	 * @return type
 	 */
 	public String getAccountType(){
@@ -78,6 +84,7 @@ public class Account {
 	
 	/**
 	 * method for setting account type
+	 * Author: Garrett
 	 * @param type
 	 * @return none
 	 */
@@ -87,6 +94,7 @@ public class Account {
 	
 	/**
 	 * method for getting account type
+	 * Author: Nicole
 	 * @return type
 	 */
 	public double getStartingBalance(){
@@ -95,6 +103,7 @@ public class Account {
 	}
 	
 	/** the getDateCreated() method
+	 * Author: Garrett
 	 * Purpose: return the date the object was created
 	 * @param void
 	 * @returns: a java.util.Date object
@@ -104,6 +113,7 @@ public class Account {
 	}
 	
 	/** the getDateCreated() method
+	 * Author: Garrett
 	 * Purpose: return the date the object was created
 	 * @param void
 	 * @returns: a java.util.Date object
@@ -114,14 +124,28 @@ public class Account {
 	
 	/**
 	 * toStringNew method
+	 * Author: Garrett
 	 * Purpose: creating the data to print in the receipt for new accounts
 	 */
 	public String toStringNew() {
 		
-		return "Name: " + name + "\nAccount Number: " + AccountNumber + "\nAccount Type: " + AccountType + "\nStarting Balance: " + startingBalance;
+		return "Name: " + name + "\n Account Number: " + AccountNumber + "\n Account Type: " + AccountType + "\n Starting Balance: " + startingBalance;
 	}
+	
+	/**
+	 * toStringExisting method
+	 * Author: Garrett
+	 * Purpose: creating the data to print in the receipt for new accounts
+	 */
+	public String toStringExisting() {
+		return String.format("Name: %-10s\n Account Number: %-6d\n Account Type: %-8s\n Current Balance: %-10.2f."
+				, name, AccountNumber, AccountType, startingBalance);
+	}
+	
+	
 	/**
 	 * toStringList method
+	 * Author: Garrett
 	 * Purpose: creating the data to print to the console for all existing accounts, or for when printing individual existing accounts
 	 */
 	public String toStringList() {
